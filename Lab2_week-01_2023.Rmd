@@ -10,22 +10,51 @@ date: "January XX, 2022"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+# Install and load packages
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+# install.packages("tidyverse")
+library(tidyverse)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+# Import your data in a csv file
+```{r}
+# read_csv()
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Graphs (what graphs do we want student to be able to make?)
+
+## Leaf area by species (cm2)
+```{r}
+
+```
+Question 1 (X points): What does the difference between average leaf area tell you about the species life strategies?
+
+## Leaf Mass per Area (g/cm2)
+```{r}
+
+```
+Question 2 (X points):
+
+## Leaf Water Content
+```{r}
+```
+Question 3 (X points):
+
+## Leaf Area: Stem Area (cm2/mm2)
+```{r}
+
+```
+Question 4 (X points): 
+
+
+
+
+
+
+
+
+
