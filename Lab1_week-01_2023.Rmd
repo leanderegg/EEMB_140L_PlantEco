@@ -10,7 +10,7 @@ date: "January XX, 2022"
 
 ## What is this?
 
-The format of code we'll be working with this quarter in what's called an **RMarkdown** document. This allows you to write code and integrate it with text, which is great for the format of this class where we will code but also talk about the mathematics behind models. Additionally, this type of document is very powerful because it allows you to output a file via what's called "knitting", or putting all that code + text into a format that is in `.html`, `.doc`, or `.pdf`.  
+In this course, we will be using R to work with and analyze data in the format of an **RMarkdown** document. This allows you to write code alongside text, which is a great way to share code and its outputs with other people. This type of document is also very powerful because it allows you to output a file via what's called "knitting", or putting all that code + text into a format that is in `.html`, `.doc`, or `.pdf`.  
 
 ## Important parts of an RMarkdown document
 
@@ -22,7 +22,7 @@ If you want to evaluate (i.e. run) _all_ the code in a chunk, you can click the 
 
 **3. YAML header**: at the top of the document, there is a header that contains the title of the document, the author name (yours!), the date, and the output options for the RMarkdown document. There are a few possible options for outputs, but the easiest ones to use are either **html** or **word docs**. PDFs are very clean, but knitting them can be tricky.  
 
-Info on how to format your RMarkdown document can be found [here](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).  
+More info on how to format your RMarkdown document can be found [here](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).  
 
 ## How do I knit an RMarkdown document?
 
@@ -34,7 +34,7 @@ If there are any errors in knitting, you can fix them! A message will pop up in 
 
 ## Why is knitting important?
 
-For this class, you'll be turning in your homework in the form of a knitted document (i.e. not an RMarkdown!) and without all the information from lab. Therefore, you'll need to be comfortable with 1) making sure all the necessary code is in a new RMarkdown document for your homework, and 2) fixing errors as they come up.  
+For this class, you'll be turning in your homework in the form of a knitted document (i.e. not an RMarkdown!). Therefore, you'll need to be comfortable with 1) making sure all the necessary code is in the RMarkdown document for your homework, and 2) fixing errors as they come up.  
 
 # 1. Inserting and writing code
 
@@ -58,7 +58,7 @@ Try it below!
 
 * We can tell R to execute code in a variety of ways --
   
-    + Within the chunk, you can press the 'Play' button. 
+    + Within the chunk, you can press the green 'Play' button. 
         
     + Keyboard shortcut: Shift+Cmd+Enter (for mac) executes everything in the chunk.
         
@@ -155,11 +155,9 @@ z
 # For example -- 
 
 x <- 4 # assign x as 4
-
 x
 
 y <- 2 # assign y as 2
-
 y
 
 xy <- x + y # Let's say we want to add x and y, we should name the output something different from our input values of 'x' or 'y'. 
@@ -178,17 +176,11 @@ If you will be using the lab computers, do not count on your files being saved a
  
 # 6. How do we generate, categorize and manipulate data? 
     
-#### A. Types of data in R
+#### A. Types of data in R we will use in this course
 
 * A **vector** is one-dimensional sequence of data of the same type (e.g., a string of numbers). This is the most basic data type in R. 
-
-* A **matrix** is a data element in two-dimensions (has rows and columns). Same as vector, the components in a matrix must be of the same basic type (e.g., all numbers). 
-
-    + An **array** is similar to a matrix, but can be used for higher-order dimensional data. We won't cover these explicitly, but there are functions to generate them. 
     
-    + Vectors, matrices and arrays can only hold one data type, but what if we want to hold data that contains characters and numbers? 
-    
-* A **data frame** is more general than a matrix, in that different columns can have different data types within them (numeric, character, factor, etc.). The data frame is the most common data type we are going to use in this class.
+* A **data frame** has multiple columns and rows, and can have different data types within them (numeric, character, factor, etc.). The data frame is the most common data type we are going to use in this class.
 
 * A **list** is an ordered collection of data. A list allows you to gather a variety of (possibly unrelated) objects under one name because there is no restriction on data types or length of the components. [We've already created one in the previous section.]
 
@@ -249,17 +241,6 @@ x * y
 x / y
 ```
 
-* If your vectors are different lengths, the shorter one is repeated (sometimes fractionally): 
-```{r}
-x <- c(1:10)
-y <- c(1,2)
-x
-y
-
-x + y
-x * y
-```
-
 * The `length()` function returns the number of elements in a vector
 ```{r}
 length(x)
@@ -278,14 +259,15 @@ x[length(x)] # last element
 x[1:3] # first three elements
 
 x[-1] # first element excluded
-
-x[x < 20] # what does this do?
-
-x < 20 # what is the difference between this line and the code above it? 
 ```
 
-* Logical operators are also useful for all data types: 
+* Logical operators are also useful for all data types
 ```{r}
+# List of logical operators:
+# <, <= less than or less than or equal to
+# >, >= greater than or greater than or equal to
+# == for exact equality
+# != for inequality
 x <- seq(from = 1, to = 10, by = 1)
 x
 
@@ -296,56 +278,12 @@ z <- x < 7
 y
 z
 
-# List of logical operators:
-# <, <= less than or less than or equal to
-# >, >= greater than or greater than or equal to
-# == for exact equality
-# != for inequality
 ```
 
-#### C. Matrices and Arrays
-* Matrices have dimensions and vectors do not. We can use the `dim()` command to get the dimensions of a matrix: 
-```{r}
-x <- c(1:10)
-x
-dim(x) # does not work for a vector
 
-x <- matrix(1:10, nrow = 2, ncol = 5, byrow = T)
-x
-dim(x) # works
-```
+#### C. Data Frames
 
-* The `array()` function also works: 
-```{r}
-x <- array(1:20, dim=c(4,5))
-x
-```
-
-* You can initialize (or pre-fill) vectors, matrices or arrays with zeros or NAs: 
-```{r}
-a <- rep(0, times = 10)
-a
-
-b <- matrix(1:10, nrow = 2, ncol = 5, byrow = T)
-b
-
-c <- array(0, dim = c(3, 10))
-c
-
-# You can also use NA (Not Available) or NaN (Not a Number) to pre-fill data types
-d <- rep(NaN, times = 10)
-d
-```
-
-* You can also transpose a matrix with the `t()` function to switch the rows and columns:
-```{r}
-x
-t(x)
-```
-
-#### D. Data Frames
-
-* You can think of a data frame as a more generalized form of a matrix. Whereas a matrix can only hold information of one type (e.g., numbers), a data frame can hold information of different types column-wise. 
+* You can think of a data frame as a more generalized form of a matrix (another data form we will not focus on in this course). Whereas a matrix can only hold information of one type (e.g., numbers), a data frame can hold information of different types column-wise. 
 
 * Column Types (with examples)
     + Character : "a", "b", "c"
@@ -370,6 +308,7 @@ dim(dat)
 
 # How many rows and columns are there? 
 ```
+
 * If we want to get a single value from the data frame, we can provide an index in square brackets:
 ```{r}
 # Take the value in the 1st row and 2nd column of dat, and store it in x
@@ -380,16 +319,19 @@ x
 y <- dat[20, 4]
 y
 ```
+
 * We can select whole sections as well. For example, we can select the first ten frogs (rows) of values for the first four variables (columns) like this:
 ```{r}
 p <- dat[1:2, 1:2] # similar to when creating vectors, the : symbol tells are to start index 1 and go to index 2, this does not need to start 1
 
 p
 ```
+
 * You can also use the `c()` function select non-contiguous values: 
 ```{r}
 dat[c(1, 3, 5), c(2, 3, 4)]
 ```
+
 * We also don't have specify explicit rows and columns if we want all rows or all columns: 
 ```{r}
 # All columns from row 1
@@ -399,7 +341,14 @@ dat[1, ]
 dat[, 4]
 ```
 
-#### E. Lists
+* Creating a dataframe from a csv file
+
+```{r}
+
+
+```
+
+#### D. Lists
 
 * Lists are another useful way to store data of different types in an ordered way:
 ```{r}
@@ -419,7 +368,7 @@ str(new.list)
 new.list[[1]][1]
 ```
 
-#### F. List of useful functions to create and explore data structure
+#### E. List of useful functions to create and explore data structure
 
 * Functions to create & explore data structure 
     + `c()` - concatenate function
@@ -456,182 +405,73 @@ new.list[[1]][1]
     + `median()`
     + `summary()`
 
-# 7.  How can we repeat code? : Introduction to the 'for' loop
+# 6. How do we make graphs? 
 
-#### A. Why use the `for()` loop?
-Imagine trying to do an iterative process over a large dataset - 
+For this course, we are going to be using the R package ggplot2 for creating graphs. A package is a collection of functions that was created and made available to the R community.
+
+First download the package, and use the library() function to load it
 ```{r}
-mat.new <- matrix(rnorm(50, 1:100), nrow = 5, ncol = 5, byrow = T)
+# install.packages("ggplot2") # downloads the package (only need to run once)
+library(ggplot2) # loads the package (need to run everytime you open an new instance of R Studio)
 
-mat.new
-
-sum(mat.new[, 1])
-sum(mat.new[, 2])
-sum(mat.new[, 3])
-sum(mat.new[, 4])
-sum(mat.new[, 5])
-# and so forth - is this the most efficient way to do something? 
 ```
 
-#### B. Let's write a `for()` loop 
+In it's most basic form, ggplot works by using a mapping aesthetic (set using aes()) and a geometry to create a plot.
 
-* The basic structure of a for loop is: 
-
-for (variable in a collection of variables) {  
-expression(s)  
-}  
-
-* Important points to remember: You must always create an emtpy data type (e.g., vector) to store the output of your data. Any data generated within your loop will be not be saved, unless you use **variable assignment** within the loop. 
-
-* For example, if we wanted to add 5 to each element of the vector x, and store it in vector y, we could do it with a `for()` loop:
+Using the data set we uploaded above, we are going to create a bar plot
 ```{r}
-x <- 1:10 # make a vector 
 
-y <- rep(NaN, length(x))  # create an object y to hold the answer by repeating the number 0 into a vector of the same length as x (i.e., 9 slots)
+# ggplot(data, aes(x = , y = )) +
+#   geom_col()
 
-for (i in 1:length(x)) { # for every number in the vector x, starting at the first variable
-  y[i] <- x[i] + 5 # add five to it and store it in the vector y, our new values will overwrite y 
-}
 
-y
+
 ```
 
-* However, in R, we can do this much more efficiently using the <- command (because x is vectorized), so you don't need a `for()` loop for everything!
-```{r}
-y <- x + 5
-y
-```
-
-*'i' can be whatever you like, it just has to be consistent across the loop!
-```{r}
-x <- 1:10
-
-y <- rep(NaN, length(x) - 1) 
- 
-for (puppies in 1:length(x) - 1) {
-  y[puppies] <- x[puppies] + x[puppies + 1] 
-}
-
-y
-```
-
-* Example using a logical statement 
-```{r}
-x <- c(1:10)
-
-emptydat <- rep(NA, length(x))
-
-for (i in 1:length(x)){
-   emptydat[i] <- ifelse(x[i] > 5, "yes", "no")
-}
-
-emptydat
-```
-
-#### D. Think, pair and share 1
-
-* Write a `for()` loop that (1) iterates over the numbers 1 to 10, (2) calculates the cube of each number and (3) saves the output in a storage vector. 
+By choosing a different geometry function, we can create different types of graphs.
 ```{r}
 
 ```
 
-#### E. Think, pair and share 2
+There are many ways to customize graphs, such as changing colors and adding labels and legends.
 
-* Write a `for()` loop that (1) iterates over the numbers 1 to 10, (2) adds each variable to the variable that succeeds it in vector x (e.g., 1 + 2; 2 + 3; etc.) and (3) saves the output in a storage vector.
-```{r}
-
-```
+For a summary of ggplot functions, visit this [cheatsheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf)
+For more examples of graphing with ggplot, view [this gallery](https://r-graph-gallery.com/)
 
 ***
 
 # 8. Homework exercise
 
-1A. Use the : or `c()` or `seq()` function to create a vector of numbers that ranges from 1 to 10. (1 pt)
-1B. Name the vector "vector.1" using variable assignment. (1 pt)
-1C. Print the vector. (1 pt)
+1. Write code below to upload the NAME.csv file from Canvas. Save it as a varaible named hw_data (X point)
+```{r}
+
+
+```
+
+2. Below is code to creat a bar graph using the data you loaded above. Write in words what each line of code means. Some lines have been annotated for you. (X pts)
+```{r}
+
+
+```
+
+3. Copy the code above, and make alterations to add a descriptive title (1 point) and change the line color (X point)
+```{r}
+
+
+```
+
+4. Create a line plot using the example data, with XX as the x variable and XX as the y variable (X points)
+```{r}
+
+
+```
+
+5. Visit this website []() and add a new theme to your graph (X points)
+
 ```{r}
 
 ```
 
-2A. Use the `rep()` function to create a holding vector for a `for()` loop populated with NaN. Make this vector the same length as vector.1 from #1 (a length of 10). (1 pt)
-2B. Name the vector "vector.2" using variable assignment. (1 pt)
-2C. Print the vector. (1 pt)
-```{r}
-
-```
-
-3. Write in words what each line of code means. Some lines have been annotated for you. (5 pts)
-```{r}
-vector.1 <- 1:10 
-
-vector.1 
-
-vector.2 <- rep(NaN, times = length(vector.1)) 
-
-for(i in 1:length(vector.1)) { 
-  vector.2[i] <- vector.1[i] + 1 
-}
-
-vector.2 
-```
-
-4. In #3 you used the letter 'i' to denote each variable in vector.1 and vector.2. If you replaced 'i' with 'j', would anything change about your output? Please explain your answer in the space below. (2 pts)
-
-
-5. We will use a `for()` loop to iterate over a vector and solve for variable 'y' using the `y = mx + b` equation. Please follow the prompts below. Some prompts have been completed for you. (8 pts)
-```{r}
-# Use variable assignment to assign 10 as b and 1 as m
-b <- 10
-m <- 1
-
-# Create a vector that ranges from 1 to 100 and name it 'x' using variable assignment. (2 pts)
-####### WRITE YOUR ANSWER HERE #######
-
-
-
-######################################
-
-# Create a holding vector for 'y' using the rep() function that is of the same length as vector x, but populate this vector with NaN. (2 pts)
-####### WRITE YOUR ANSWER HERE #######
-
-
-
-######################################
-
-# Write out what each line below means in words:
-for (i in 1:length(x)) { # WRITE YOUR ANSWER HERE (1pt)
-  y[i] <- m * x[i] + b # WRITE YOUR ANSWER HERE (1pt)
-}
-
-# Print y (1 pt)
-####### WRITE YOUR ANSWER HERE #######
-
-
-
-######################################
-
-# Use the plot function to plot y as a function of x 
-plot(y~x)
-```
-
-6. Write a `for()` loop to 1) take the square root and then 2) add 2 for each value in a vector. 
-```{r}
-# vector of values
-fibseq <- c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34)
-
-# create a holding vector (1 pt)
-
-
-# write a for() loop (2 pts)
-####### WRITE YOUR FOR() LOOP HERE ########
-
-
-
-###########################################
-
-# print the final vector (1 pt)
-
-```
 
 ***
 
