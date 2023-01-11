@@ -341,10 +341,20 @@ dat[1, ]
 dat[, 4]
 ```
 
-* Creating a dataframe from a csv file
+* Creating a data frame from a csv file
+
+1) First, download the iris.csv file from the Canvas website, and save to your computer
+
+2) Make sure that the file is save in your Working Directory. To do so, to to Session > Set Working Directory > Choose Directory, and choose the folder. You can choose to set this to your Downloads folder, or create a new folder just for the course.
+
+3) load the csv as a variable using the read.csv() function
 
 ```{r}
+# read in the csv as a variable
+iris_data <- read.csv("iris.csv")
 
+# now the data frame is ready to work with in R
+head(iris_data)
 
 ```
 
@@ -418,22 +428,45 @@ library(ggplot2) # loads the package (need to run everytime you open an new inst
 
 In it's most basic form, ggplot works by using a mapping aesthetic (set using aes()) and a geometry to create a plot.
 
-Using the data set we uploaded above, we are going to create a bar plot
+Using the iris_data dataframe we uploaded above, we are going to create a boxplot using the form:
+ggplot(data, aes(x = , y = )) + a geometry
 ```{r}
 
-# ggplot(data, aes(x = , y = )) +
-#   geom_col()
+ggplot(iris_data, aes(x = variety, y = sepal.length)) +
+  geom_boxplot()
 
-
+# There are a lot of ways to customize graphs
+ggplot(iris_data, aes(x = variety, y = sepal.length)) +
+  geom_boxplot(aes(fill = variety)) + # adding color
+  ylab("Sepal Length") + # changing lables
+  ggtitle("Sepal Length by Iris Variety") # adding a title
 
 ```
 
 By choosing a different geometry function, we can create different types of graphs.
 ```{r}
+# scatter plot
+ggplot(iris_data, aes(x = sepal.width, y = sepal.length)) +
+  geom_point()
+
+ggplot(iris_data, aes(x = sepal.width, y = sepal.length, color = variety)) + # adding color
+  geom_point() 
+
+# you can add in lines to better see relationships
+ggplot(iris_data, aes(x = sepal.width, y = sepal.length, color = variety)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+# bar_plot
+ggplot(iris_data, aes(x = sepal.width))+ 
+  geom_bar()
+
+#separating out by variety
+ggplot(iris_data, aes(x = sepal.width, fill = variety))+ 
+  geom_bar() +
+  facet_wrap(~variety)
 
 ```
-
-There are many ways to customize graphs, such as changing colors and adding labels and legends.
 
 For a summary of ggplot functions, visit this [cheatsheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf)
 For more examples of graphing with ggplot, view [this gallery](https://r-graph-gallery.com/)
@@ -442,35 +475,54 @@ For more examples of graphing with ggplot, view [this gallery](https://r-graph-g
 
 # 8. Homework exercise
 
-1. Write code below to upload the NAME.csv file from Canvas. Save it as a varaible named hw_data (X point)
+This homework will work with a read dataset of functional traits collected from blue oaks (Quercus douglassii) from two different sites. Download the csv file from the class Canvas site, and make sure it is saved in your working directory folder.
+
+The columns in the dataset are:
+site = the site that it was collected, either wild (W) or at the Hopland common garden (H)
+ppt = precipitation
+tmx = mean maximum temperature
+mleafsize = mean length of the leaf
+mSLA = mean specific leaf area (cm^2/g)
+mLDMC = mean leaf dry matter content (g/g)
+
+We will go over the ecological significance of SLA and LDMC more in Lab 2
+
+1. In the code chunk below, upload the Blue_Oak_Traits.csv file from Canvas. Upload it as a variable named hw_data (1 pt)
+```{r}
+ hw_data <- read.csv("Blue_Oak_Traits.csv")
+
+```
+
+2. Create a scatterplot using hw_data, with mSLA on one axis and mLDMC on the other (1 pt).
+```{r}
+ggplot(hw_data, aes(x = mSLA, y = mLDMC, color = site))+
+  geom_point()+
+  geom_smooth(method = "lm")
+
+```
+
+3. Copy the code above, and add code to give the graph a descriptive title (1 pt), change the color to show the site (1 pt), and add a trendline using geom_smooth() (1 pt)
+```{r}
+ggplot(hw_data, aes(x = mSLA, y = mLDMC, color = site))+
+  geom_point()+
+  geom_smooth(method = "lm")
+
+```
+
+4. What does this plot tell you about the relationship between SLA and LDMC? Are there any observable differences between the two sites? (1 pt)
+(write answer here)
+
+5. Create either a boxplot or barplot using any of the climate or trait data. Play around with the color, labels, titles, or even try a new [theme](https://ggplot2.tidyverse.org/reference/ggtheme.html) if you're feeling bold! (2 pts)
 ```{r}
 
 
 ```
 
-2. Below is code to creat a bar graph using the data you loaded above. Write in words what each line of code means. Some lines have been annotated for you. (X pts)
-```{r}
+6. Explain in words the figure that you created. What does it show? Are there any patterns or relationships that you can observe? (2 pts)
+(type answer here)
 
 
-```
 
-3. Copy the code above, and make alterations to add a descriptive title (1 point) and change the line color (X point)
-```{r}
-
-
-```
-
-4. Create a line plot using the example data, with XX as the x variable and XX as the y variable (X points)
-```{r}
-
-
-```
-
-5. Visit this website []() and add a new theme to your graph (X points)
-
-```{r}
-
-```
 
 
 ***
