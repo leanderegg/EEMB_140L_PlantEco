@@ -320,7 +320,7 @@ y <- dat[20, 4]
 y
 ```
 
-* We can select whole sections as well. For example, we can select the first ten frogs (rows) of values for the first four variables (columns) like this:
+* We can select whole sections as well. For example, we can select the first two rows of values for the first two columns like this:
 ```{r}
 p <- dat[1:2, 1:2] # similar to when creating vectors, the : symbol tells are to start index 1 and go to index 2, this does not need to start 1
 
@@ -366,16 +366,6 @@ abc <- letters[1:10]
 b <- seq(0, 0.9, by = 0.1)
 y <- 1:10
 answer <- c(TRUE, FALSE)
-
-new.list <- list(abc, b, y, answer)
-new.list
-str(new.list)
-
-# Similar to subsetting in a data frame, you can isolate elements of a list with 
-    # [[]] - within a given list
-    # [] - within a given data type
-
-new.list[[1]][1]
 ```
 
 #### E. List of useful functions to create and explore data structure
@@ -421,8 +411,9 @@ For this course, we are going to be using the R package ggplot2 for creating gra
 
 First download the package, and use the library() function to load it
 ```{r}
-# install.packages("ggplot2") # downloads the package (only need to run once)
-library(ggplot2) # loads the package (need to run everytime you open an new instance of R Studio)
+# downloads the package (only need to run once)
+
+# loads the package (need to run everytime you open an new instance of R Studio)
 
 ```
 
@@ -432,39 +423,22 @@ Using the iris_data dataframe we uploaded above, we are going to create a boxplo
 ggplot(data, aes(x = , y = )) + a geometry
 ```{r}
 
-ggplot(iris_data, aes(x = variety, y = sepal.length)) +
-  geom_boxplot()
-
-# There are a lot of ways to customize graphs
-ggplot(iris_data, aes(x = variety, y = sepal.length)) +
-  geom_boxplot(aes(fill = variety)) + # adding color
-  ylab("Sepal Length") + # changing lables
-  ggtitle("Sepal Length by Iris Variety") # adding a title
 
 ```
 
 By choosing a different geometry function, we can create different types of graphs.
 ```{r}
 # scatter plot
-ggplot(iris_data, aes(x = sepal.width, y = sepal.length)) +
-  geom_point()
 
-ggplot(iris_data, aes(x = sepal.width, y = sepal.length, color = variety)) + # adding color
-  geom_point() 
 
 # you can add in lines to better see relationships
-ggplot(iris_data, aes(x = sepal.width, y = sepal.length, color = variety)) +
-  geom_point() +
-  geom_smooth(method = "lm")
+
 
 # bar_plot
-ggplot(iris_data, aes(x = sepal.width))+ 
-  geom_bar()
+
 
 #separating out by variety
-ggplot(iris_data, aes(x = sepal.width, fill = variety))+ 
-  geom_bar() +
-  facet_wrap(~variety)
+
 
 ```
 
@@ -489,28 +463,26 @@ We will go over the ecological significance of SLA and LDMC more in Lab 2
 
 1. In the code chunk below, upload the Blue_Oak_Traits.csv file from Canvas. Upload it as a variable named hw_data (1 pt)
 ```{r}
- hw_data <- read.csv("Blue_Oak_Traits.csv")
+
 
 ```
 
 2. Create a scatterplot using hw_data, with mSLA on one axis and mLDMC on the other (1 pt).
 ```{r}
-ggplot(hw_data, aes(x = mSLA, y = mLDMC, color = site))+
-  geom_point()+
-  geom_smooth(method = "lm")
+
 
 ```
 
 3. Copy the code above, and add code to give the graph a descriptive title (1 pt), change the color to show the site (1 pt), and add a trendline using geom_smooth() (1 pt)
 ```{r}
-ggplot(hw_data, aes(x = mSLA, y = mLDMC, color = site))+
-  geom_point()+
-  geom_smooth(method = "lm")
+
 
 ```
 
 4. What does this plot tell you about the relationship between SLA and LDMC? Are there any observable differences between the two sites? (1 pt)
-(write answer here)
+(type answer here)
+
+
 
 5. Create either a boxplot or barplot using any of the climate or trait data. Play around with the color, labels, titles, or even try a new [theme](https://ggplot2.tidyverse.org/reference/ggtheme.html) if you're feeling bold! (2 pts)
 ```{r}
