@@ -1,0 +1,504 @@
+---
+title: 'EEMB 140 -- Lab 1: Introduction to R'
+author: 'your name here'
+output:
+  html_document: default
+date: "January XX, 2022"
+---
+
+# 0. Getting oriented
+
+## What is this?
+
+In this course, we will be using R to work with and analyze data in the format of an **RMarkdown** document. This allows you to write code alongside text, which is a great way to share code and its outputs with other people. This type of document is also very powerful because it allows you to output a file via what's called "knitting", or putting all that code + text into a format that is in `.html`, `.doc`, or `.pdf`.  
+
+## Important parts of an RMarkdown document
+
+**1. code chunks**: usually in lighter colors than the background. These will run as code, i.e. everything you put in a code chunk is "code." Code chunks are delineated with three slanted dashes and `{r}` at the top, and three slanted dashes at the bottom.  
+
+If you want to evaluate (i.e. run) _all_ the code in a chunk, you can click the green 'play' button in the top right corner of the chunk. If you click the down arrow with the green line, you can run all the code chunks up until the selected chunk. Other run options are in the top right corner, under 'Run'.  
+
+**2. text**: everything else outside a code chunk! For example, this is normal text that is not being evaluated as code.  
+
+**3. YAML header**: at the top of the document, there is a header that contains the title of the document, the author name (yours!), the date, and the output options for the RMarkdown document. There are a few possible options for outputs, but the easiest ones to use are either **html** or **word docs**. PDFs are very clean, but knitting them can be tricky.  
+
+More info on how to format your RMarkdown document can be found [here](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).  
+
+## How do I knit an RMarkdown document?
+
+You can knit the whole document by hitting the 'Knit' button in the top middle of the script pane. If you just hit the button, the format will be whatever is in the **YAML header** as the default output. However, you can change that by clicking on the drop down menu.  
+
+When you knit, you'll see the progress of rendering that document in the 'R Markdown' tab in the console pane below. Everything is run from the top to the bottom of the document, so you'll have to make sure that all the necessary code is in the document before you knit. **Just because your code runs doesn't mean it will knit properly!**  
+
+If there are any errors in knitting, you can fix them! A message will pop up in the console, and you can go back to that line of code and fix it.  
+
+## Why is knitting important?
+
+For this class, you'll be turning in your homework in the form of a knitted document (i.e. not an RMarkdown!). Therefore, you'll need to be comfortable with 1) making sure all the necessary code is in the RMarkdown document for your homework, and 2) fixing errors as they come up.  
+
+# 1. Inserting and writing code
+
+## Inserting code
+
+You can insert code chunks in the following ways:  
+1. using the insert button in the top right of the script pane  
+2. using a keyboard shortcut: for Macs, this is Command + Shift + I, and for Windows, this is Ctrl + Alt + I.  
+
+Try it below!
+
+## Writing code
+
+* Let's type up some code within the chunk.
+```{r}
+
+```     
+
+# 2. Executing code
+
+* We can tell R to execute code in a variety of ways --
+  
+    + Within the chunk, you can press the green 'Play' button. 
+        
+    + Keyboard shortcut: Shift+Cmd+Enter (for mac) executes everything in the chunk.
+        
+    + Keyboard shortcut: Cmd+Enter executes the line your cursor is located on or the line(s) you have highlighted.
+        
+* You'll notice a green bar appear next to the lines of code you have executed. A red bar will appear if there is an error in a given line of code. 
+        
+* Our code should also appear in the Console (bottom left pane) if you have correctly executed it. 
+        
+* After your code executes, you can see the output after your chunk in the Source pane or in the Console pane. You can view the output in a new window, delete the ouput after the chunk
+    
+* The gear wheel and the downward play arrow within the chunk will allow you access chunk preferences or play all previous chunks (depending on where your cursor is). 
+```{r}
+1 - 1
+1 + 1
+1 + 2
+```
+* It's important to annotate your code to remind yourself what different lines of code mean, why you used this particular function, etc. 
+    
+    + You can make notes outside the chunk by typing as usual. If you're interested in formatting text OUTSIDE the chunk there is a resource on how to do so here: [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf). 
+        
+    + If you would like to make notes inside the chunk, add a '#' before your note and type as usual. Your notes will be colored green. Your code will be everything NOT in green. 
+```{r}
+1 + 1 # addition
+1 - 1 # subtraction
+1 * 1 # multiplication
+1 / 1 # division
+```
+
+# 3. Functions, arguments and variable assignment 
+        
+* Why are functions important?
+    
+    + We often want R to do something more complicated than basic mathematical calculations. To do this, we must use **functions**, which are summarized bits of code that perform a specific task. Whether that be generating data, manipulating the data into a new structure, performing a statistical analysis or graphically displaying data, you will need to know how to call and use a function. Functions can be written yourself or you can use functions that have been pre-defined in `base` R (provided functions with original installation) or external R packages (functions written by everyday users like yourself!).
+    
+\newline
+* There are two pieces to running code in R: 
+    
+  + **Functions** - This tells R what we want it to do for us. Functions will always be followed by a set of parentheses. For example, there is a `sum()` function in R that tells R we want it to calculate the sum for a set of variables. 
+        
+  + **Arguments** - Within the function (within the parentheses) you must supply an argument(s). Arguments tell the function -- (1) how you would like it to perform that task and (2) what data you want the task performed on. 
+    
+* To see the variety of arguments that are available within a function --
+```{r}
+
+# or type the function in the 'Help' tab to see all documentation
+```
+
+Here's an example of a function and arguments. What is the function, and what are the arguments?
+
+```{r}
+
+```
+
+What new arguments are in this example? What do you think they do?
+
+```{r}
+sum(1, 2, 3, NA, na.rm = TRUE) 
+```
+
+# 4. Variable Assignment
+
+* A **variable** (more generally called an **object**) is data we save in our R environment. If we do not assign information as a variable, we have no way to call, save or manipulate data in the R environment. The assignment operator is <- or =. In words, imagine this symbols as 'is' or 'gets'. **Variables** that you assign in R can also be called into functions and thus would also be categorized as an **argument** in that context. You should also get into the habit of saving any output generated by **function**. 
+```{r}
+
+
+```
+
+```{r}
+
+```
+  
+```{r}
+
+
+```
+
+```{r}
+# 3 <- 5 # you can't use any numerics in your assignment!
+#3.dog <- 5 # you can't use any numerics in your assignment!
+```
+
+```{r}
+# You can assign larger pieces of data such as --
+
+z <- 
+z
+```
+
+```{r}
+# Best practices recommend that you assign new variables after a modification, rather than overwriting previous variables. 
+
+# For example -- 
+
+x <- 4 # assign x as 4
+x
+
+y <- 2 # assign y as 2
+y
+
+
+```
+
+# 5. How to save your workspace and your data
+
+* When you change anything within your .Rmd file the title will turn red and an asterisk will appear. You can save changes by pressing the save button. 
+    
+* If you would like create a new file -- you'll go the top left hand corner of the screen (white page with green plus symbol) and select 'R notebook'. Make sure to press the save button and remember where you have saved it! 
+    
+* If you're using a personal computer, it would be ideal to create a new folder on your desktop to create an R project (see below). 
+
+If you will be using the lab computers, do not count on your files being saved after you log out, so make sure to email the file to yourself or upload it to a cloud based service (e.g., Box, Dropbox, Google Drive). 
+ 
+# 6. How do we generate, categorize and manipulate data? 
+    
+#### A. Types of data in R we will use in this course
+
+* A **vector** is one-dimensional sequence of data of the same type (e.g., a string of numbers). This is the most basic data type in R. 
+    
+* A **data frame** has multiple columns and rows, and can have different data types within them (numeric, character, factor, etc.). The data frame is the most common data type we are going to use in this class.
+
+* A **list** is an ordered collection of data. A list allows you to gather a variety of (possibly unrelated) objects under one name because there is no restriction on data types or length of the components. [We've already created one in the previous section.]
+
+#### B. Vectors
+
+* We can create vectors with the `c()` or concatenate function:
+```{r}
+
+
+```
+
+* We can also create vectors with the colon operator to generate a sequence of numbers:
+```{r}
+
+
+
+```
+
+* We can use the `seq()` function create a sequence of values in pre-defined steps: 
+```{r}
+
+```
+
+* We can use the `rep()` function to repeat or replicate values as well: 
+```{r}
+
+
+```
+
+* Vectors can be manipulated in the same way numerical values can:
+```{r}
+x <- c(1:10)
+x
+
+y <- c(1, 2, 1, 8, 3, 2, 4, 3, 1, 2)
+y
+
+x + y
+x - y
+x * y
+x / y
+```
+
+* The `length()` function returns the number of elements in a vector
+```{r}
+
+```
+
+* Brackets are useful to identify parts of a vector. This idea will be important when we move to two-dimensional data with rows and columns:
+```{r}
+x <- seq(from = 10, to = 30, by = 1) # one dimensional vector
+
+```
+
+* Logical operators are also useful for all data types
+```{r}
+# List of logical operators:
+# <, <= less than or less than or equal to
+# >, >= greater than or greater than or equal to
+# == for exact equality
+# != for inequality
+
+x <- seq(from = 1, to = 10, by = 1)
+x
+
+y <- seq(from = 11, to = 20, by = 1)
+y
+
+
+
+```
+
+
+#### C. Data Frames
+
+* You can think of a data frame as a more generalized form of a matrix (another data form we will not focus on in this course). Whereas a matrix can only hold information of one type (e.g., numbers), a data frame can hold information of different types column-wise. 
+
+* Column Types (with examples)
+    + Character : "a", "b", "c"
+    + Numeric : 10, 10.2
+    + Integer : 5
+    + Logical : TRUE or FALSE
+    + Complex : 1 + 4i 
+    + Factors : "low", "medium", "high"
+```{r}
+dat <- data.frame(id = letters[1:10], 
+                  x = seq(0, 0.9, by = 0.1), 
+                  y = 1:10L, 
+                  answer = c(TRUE, FALSE))
+
+dat
+
+str(dat)
+```
+* Again, we can see the dimensions, or shape, of the data frame like this:
+```{r}
+
+# How many rows and columns are there? 
+```
+
+* If we want to get a single value from the data frame, we can provide an index in square brackets:
+```{r}
+# Take the value in the 1st row and 2nd column of dat, and store it in x
+x <- 
+x
+
+# Take the value in the 20th row and 4th column of dat, and store it in y
+y <- 
+y
+```
+
+* We can select whole sections as well. For example, we can select the first two rows of values for the first two columns like this:
+
+```{r}
+p <- dat[1:2, 1:2] # similar to when creating vectors, the : symbol tells are to start index 1 and go to index 2, this does not need to start 1
+
+p
+```
+
+* You can also use the `c()` function select non-contiguous values: 
+```{r}
+
+```
+
+* We also don't have specify explicit rows and columns if we want all rows or all columns: 
+```{r}
+# All columns from row 1
+
+# All rows from column 4
+
+```
+
+* Creating a data frame from a csv file
+
+1) First, download the iris.csv file from the Canvas website, and save to your computer
+
+2) Make sure that the file is save in your Working Directory. To do so, to to Session > Set Working Directory > Choose Directory, and choose the folder. You can choose to set this to your Downloads folder, or create a new folder just for the course.
+
+3) load the csv as a variable using the read.csv() function
+
+```{r}
+# read in the csv as a variable
+
+
+# now the data frame is ready to work with in R
+
+
+```
+
+#### D. Lists
+
+* Lists are another useful way to store data of different types in an ordered way:
+```{r}
+abc <- letters[1:10]
+b <- seq(0, 0.9, by = 0.1)
+y <- 1:10
+answer <- c(TRUE, FALSE)
+```
+
+#### E. List of useful functions to create and explore data structure
+
+* Functions to create & explore data structure 
+    + `c()` - concatenate function
+    + `:` - colon operator for sequence generation
+    + `seq()` - sequence generation
+    + `rep()` - replicate elements of vectors and lists
+    + `View()` - invoke a data viewer
+    + `length()` - length of an object
+    + `class()` - object class
+    + `head()` - return the first 6 rows of an object
+    + `tail()` - return the last last 6 rows an object
+    + `dim()` - returns the dimensions of an object 
+    + `nrow()` - number of rows
+    + `ncol()` - number of columns
+    + `str()` - display the structure of each column of an object
+    + `names()` - display the names of an object, typically the column names
+    + `nlevels()` - categorial levels within an object
+    + `cbind()` - combine objects by columns
+    + `rbind()` - combine objects by rows
+    + `rm()` - remove an object
+    + `edit()` - edit an object
+    + `t()` - transpose a matrix or dataframe
+    + `is.data.frame()` - check if you data is a data frame
+    + `as.data.frame()` - coerce your data to a data frame
+    + `is.matrix()` - check if your data is a matrix
+    + `as.matrix()` - coerce your data to a matrix
+
+* Basic mathematical functions for summary statistics
+    + `sum()`
+    + `mean()`
+    + `min()`
+    + `max()`
+    + `sd()`
+    + `median()`
+    + `summary()`
+
+# 6. How do we make graphs? 
+
+For this course, we are going to be using the R package ggplot2 for creating graphs. A package is a collection of functions that was created and made available to the R community.
+
+First download the package, and use the library() function to load it
+```{r}
+# install.packages("ggplot2") # downloads the package (only need to run once)
+library(ggplot2) # loads the package (need to run everytime you open an new instance of R Studio)
+
+```
+
+In it's most basic form, ggplot works by using a mapping aesthetic (set using aes()) and a geometry to create a plot.
+
+Using the iris_data dataframe we uploaded above, we are going to create a boxplot using the form:
+ggplot(data, aes(x = , y = )) + a geometry
+```{r}
+
+ggplot(iris_data, aes(x = variety, y = sepal.length)) +
+  geom_boxplot()
+
+# There are a lot of ways to customize graphs
+ggplot(iris_data, aes(x = variety, y = sepal.length)) +
+  geom_boxplot(aes(fill = variety)) + # adding color
+  ylab("Sepal Length") + # changing lables
+  ggtitle("Sepal Length by Iris Variety") # adding a title
+
+```
+
+By choosing a different geometry function, we can create different types of graphs.
+```{r}
+# scatter plot
+ggplot(iris_data, aes(x = sepal.width, y = sepal.length)) +
+  geom_point()
+
+ggplot(iris_data, aes(x = sepal.width, y = sepal.length, color = variety)) + # adding color
+  geom_point() 
+
+# you can add in lines to better see relationships
+ggplot(iris_data, aes(x = sepal.width, y = sepal.length, color = variety)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+# bar_plot
+ggplot(iris_data, aes(x = sepal.width))+ 
+  geom_bar()
+
+#separating out by variety
+ggplot(iris_data, aes(x = sepal.width, fill = variety))+ 
+  geom_bar() +
+  facet_wrap(~variety)
+
+```
+
+For a summary of ggplot functions, visit this [cheatsheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf)
+For more examples of graphing with ggplot, view [this gallery](https://r-graph-gallery.com/)
+
+***
+
+# 8. Homework exercise
+
+This homework will work with a read dataset of functional traits collected from blue oaks (Quercus douglassii) from two different sites. Download the csv file from the class Canvas site, and make sure it is saved in your working directory folder.
+
+The columns in the dataset are:
+site = the site that it was collected, either wild (W) or at the Hopland common garden (H)
+ppt = precipitation
+tmx = mean maximum temperature
+mleafsize = mean length of the leaf
+mSLA = mean specific leaf area (cm^2/g)
+mLDMC = mean leaf dry matter content (g/g)
+
+We will go over the ecological significance of SLA and LDMC more in Lab 2
+
+1. In the code chunk below, upload the Blue_Oak_Traits.csv file from Canvas. Upload it as a variable named hw_data (1 pt)
+```{r}
+ hw_data <- read.csv("Blue_Oak_Traits.csv")
+
+```
+
+2. Create a scatterplot using hw_data, with mSLA on one axis and mLDMC on the other (1 pt).
+```{r}
+ggplot(hw_data, aes(x = mSLA, y = mLDMC, color = site))+
+  geom_point()+
+  geom_smooth(method = "lm")
+
+```
+
+3. Copy the code above, and add code to give the graph a descriptive title (1 pt), change the color to show the site (1 pt), and add a trendline using geom_smooth() (1 pt)
+```{r}
+ggplot(hw_data, aes(x = mSLA, y = mLDMC, color = site))+
+  geom_point()+
+  geom_smooth(method = "lm")
+
+```
+
+4. What does this plot tell you about the relationship between SLA and LDMC? Are there any observable differences between the two sites? (1 pt)
+(write answer here)
+
+5. Create either a boxplot or barplot using any of the climate or trait data. Play around with the color, labels, titles, or even try a new [theme](https://ggplot2.tidyverse.org/reference/ggtheme.html) if you're feeling bold! (2 pts)
+```{r}
+
+
+```
+
+6. Explain in words the figure that you created. What does it show? Are there any patterns or relationships that you can observe? (2 pts)
+(type answer here)
+
+
+
+
+
+***
+
+# 9. More resources for more R fun
+
+* Portions of this tutorial were adapted from the following resources (which you should most certainly check out!): 
+
+    + [Programming with R](https://swcarpentry.github.io/r-novice-inflammation/)
+
+    + [Prelude to R](https://preludeinr.com/) by Florent Bled
+
+    + [Introducing R](https://data.princeton.edu/R/readingdata) by Germán Rodríguez
+    
+* This is a great handy 'cheat sheet'. There are many more types of 'cheatsheets' that cover `base` R functions and other external packages [here](https://www.rstudio.com/resources/cheatsheets/). 
+
+    + [Base R Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf) by Mhairi McNeill
+
+***
+
