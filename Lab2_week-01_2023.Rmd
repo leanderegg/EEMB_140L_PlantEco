@@ -24,7 +24,7 @@ After all groups have finished entering trait data, download the group data shee
 
 ```{r}
 
-class_data <- read.csv("class_data.csv")
+class_data <- read.csv("insert name of file here")
 
 ```
 
@@ -84,9 +84,9 @@ Question 5: What trends did you observe LWC, and what does this mean ecologicall
 ## Homework
 
 1. If you were to re-design the sampling methods based on your results, would you make any changes? Why or why not?
-(write your answer here)
+(write 2-3 sentences here)
 
 2. Choose one of the species we covered in lab, and look up information on the habitats that they live in. Do the results you observed in the trait data match your expectations for their ecological range? Why or why not?
-(write your answer here)
+(write 2-3 sentences here)
 
 
