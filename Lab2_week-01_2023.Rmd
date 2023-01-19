@@ -23,6 +23,7 @@ library(ggplot2)
 After all groups have finished entering trait data, download the group data sheet on Google Drive as a csv, and use the read.csv() function to load the data
 
 ```{r}
+
 class_data <- read.csv("class_data.csv")
 
 ```
@@ -60,18 +61,25 @@ Question 2: Did we see any effect of the direction (North/South/East/West) acros
 
 
 ```
+Question 3: What trends did you observe in LMA, and what does this mean ecologically?
+(write your answer here)
 
 ## c. LWC (Leaf water content, g/g)
 
 ```{r}
 
 ```
+Question 4: What trends did you observe LWC, and what does this mean ecologically?
+(write your answer here)
+
 
 ## d. Al:As (Leaf Area to Stem Area, cm2/mm2)
 ```{r}
 
 
 ```
+Question 5: What trends did you observe LWC, and what does this mean ecologically?
+(write your answer here)
 
 ## Homework
 
