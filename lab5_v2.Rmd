@@ -1,0 +1,51 @@
+---
+title: 'EEMB 140L -- Lab 5: Rosemary Growth Data Analysis'
+author: 'your name here'
+output:
+  html_document: default
+date: "January 26, 2023"
+---
+
+# Note: you will not be turning in a knitted RMarkdown file for this lab, just the printed lab writeup. This code is just to provide a jumping-off point.
+
+* Import packages (this code chunk will not knit properly but it will import some packages for you)
+```{r}
+#install.packages("ggplot2")
+#install.packages("tidyverse")
+library(ggplot2)
+library(tidyverse)
+```     
+* Set the working directory (you can also do this by clicking "Session" above) and import CSV file with your data:
+```{r}
+setwd("FOLDER_ADDRESS_HERE")
+data <- read.csv("YOUR_FILE_HERE.csv")
+```
+
+* Figure out how you want to summarize your data:
+- what is measured multiple times for a bush?
+- how should you aggregate data to get your growth, flowering, and light availability so that you can match them together?
+- What other columns do you want to make sure are in your dataframe?
+  - species?
+  - individual #?
+  - other treatment that you noted?
+You'll probably want to make sure that you end up with a column of growth, light, flowering intensity, and species for each bush, so that you can plot things against each other that you are interested in.
+
+``` {r aggregate data}
+# on method using the 'aggregate' function
+data.ind <- aggregate(.~bush, data=data, mean)
+
+# another method using the 'group_by' and 'summarise' functions
+data.ind <- data %>% group_by(bush) %>% summarise( mean.branch.length= mean(branch.length), mean.flowers = mean(flowering_percentage))
+
+```
+
+
+
+
+
+* Example plot: point/linear regression plot of the amount of flowers versus the shadiness of each bush (you'll need to make sure the names in this chunk match the names in your data file!)
+```{r}
+ggplot(data, aes(x = shade, y = flowers, color = species))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
