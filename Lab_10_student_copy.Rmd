@@ -23,8 +23,6 @@ In this Markdown, you will be working with uour tree stand data to estimate diff
 
 # stand_data <- read.csv("title.csv")
 
-stand_data <- read.csv("140L_Lab_8_class.csv")
-
 ```
 
 ### 3) Calculate tree stand density for each plot
@@ -33,7 +31,6 @@ To calculate tree stand density, you will first need to calculate the area that 
 ```{r}
 
 # A = pi*r^2
-survey_area <- pi * 5^2
 
 
 ```
@@ -42,9 +39,9 @@ Then, you can get a count of the total number of trees in each plot using. First
 ```{r}
 
 tree_density <- stand_data %>% 
-  group_by(survey_number) %>%  # first, group by each survey
-  count() %>% # then get total number of trees in each survey
-  mutate(density = (n / survey_area) * 10000)# this adds a new column called "density" that divides the count column by our survey area and multiples by 10,000 to get trees per hectare
+  %>%  # first, group by each survey
+  %>% # then get total number of trees in each survey
+  # this adds a new column called "density" that divides the count column by our survey area and multiples by 10,000 to get trees per hectare
 
 ```
 
@@ -59,9 +56,9 @@ There are lots of ways to do this! One way is to first create a new column calcu
 
 ```{r}
 tree_basal_area <- stand_data %>% 
-  mutate(basal_area = pi * DBH_cm^2) %>% 
-  group_by(survey_number) %>% 
-  mutate(stand_basal_area = sum(basal_area) / survey_area * 10000)
+   %>% # create new column
+   %>% # group by plot
+   # create new column for mean basal area, convert into total basal area per hectare
 
 ```
 
@@ -74,9 +71,9 @@ tree_basal_area <- stand_data %>%
 Another piece of the puzzle to get accurate biomass estimates is using tree height.  In order to get average stand tree heights, we first need to create a new column where using the mutate function. Remember to calculate height, this is done by multiplying the degrees (make sure to divide by 100) by the distance, but don't forget to add the height of your eyes! Then you can again group by survey and use the summarise() function to calculate the mean
 ```{r}
 stand_height <- stand_data %>% 
-  mutate(tree_height = ((angle_degrees/100) * distance_m) + eye_height_m) %>% 
-  group_by(survey_number) %>% 
-  summarise(mean_stand_height = mean(tree_height))
+   # create new column calculating height
+   %>% # group by plot
+   # find mean tree height
 
 ```
 
@@ -98,9 +95,9 @@ In order to determine the above ground dry biomass of our eucs, we could simply 
 So we can simply make a new column for above-ground biomass (in kg) using the mutate() function, and then add this up for each survey using the summarise() function.
 ```{r}
 tree_biomass_eucs <- stand_data %>%
-  mutate(agb_eucs = .00213 * DBH_cm^1.829) %>% # create new column to calculate abg
-  group_by(survey_number) %>% # group by survey
-  summarise(total_biomass_eucs = sum(agb_eucs) / survey_area * 10000) # get total biomass per plot and convert to per hectare
+  %>% # create new column to calculate abg
+   %>% # group by survey
+   # get total biomass per plot and convert to per hectare
 
 ```
 
@@ -112,7 +109,7 @@ To do this, we will multiply the dry biomass by 35%, which is approximately the 
 
 ```{r}
 tree_carbon <- tree_biomass_eucs %>% 
-  mutate(total_carbon = total_biomass_eucs * .35)
+   # create new colum for total biomass by multiplying by .35
 
 ```
 
@@ -124,12 +121,12 @@ To do this, use your DBH calculations but with the allometric equation ABG = 0.0
 ```{r}
 
 tree_biomass_oaks <- stand_data %>%
-  mutate(agb_eucs = .000213 * DBH_cm^1.829) %>% # new column for euc abg
-  mutate(agb_oaks = 0.0000062 * DBH_cm^2.584) %>% # new column for oak abg
-  group_by(survey_number) %>%  # group by survey plot
-  summarise(total_biomass_eucs = sum((agb_eucs / survey_area) * 10000), total_biomass_oaks = sum((agb_oaks / survey_area) * 10000)) %>% # get toal abg for each, and convert to per hectare value
-  mutate(total_carbon_eucs = total_biomass_eucs * .35) %>% # convert biomass to carbon
-  mutate(total_carbon_oaks = total_biomass_oaks* .45) # convert biomass to carbon
+  %>% # new column for euc abg
+  %>% # new column for oak abg
+  %>%  # group by survey plot
+  %>% # get total abg for each, and convert to per hectare value
+  %>% # convert biomass to carbon
+  # convert biomass to carbon
 
 ```
 
