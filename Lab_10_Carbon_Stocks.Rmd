@@ -34,6 +34,7 @@ stand_data <- read.csv("stand_data_test.csv")
 First, you need to calculate the area that you surveyed, which was a circle with a 5 meter diameter:
 ```{r}
 
+# A = pi*r^2
 survey_area <- pi * 5^2
 
 ```
@@ -44,11 +45,34 @@ Then, you can get a count of the total number of trees in each plot using...
 tree_density <- stand_data %>% 
   group_by(survey_number) %>%  # first, group by each survey
   count() %>% # then get total number of trees in each survey
-  mutate(density = n / survey_area)# this adds a new column called "density" that divides the count column by our survey area
+  mutate(density = (n / survey_area) * 10000)# this adds a new column called "density" that divides the count column by our survey area and multiples by 10,000 to get trees per hectare
 
 ```
 
-Qustions 1) Look at this new dataset called "tree_density", do all the plots seem similar in density or do any stand out?
+Question 1) Look at this new dataset called "tree_density", do all the plots seem similar in density or do any stand out?
 (write answer here)
+
+3) Calculate the stand basal area (cm2 stem area per hectare)
+
+There are lots of ways to do this! One way is to first create a new column calculating each trees basal area, that is, use the diameter to calculate the area. Then group again by survey_number. Next, create another column called stand_basal_area where you divide the mean basal_area column by the survey area and mulitply by 10,000 to get the basal area per hectare
+
+```{r}
+tree_basal_area <- stand_data %>% 
+  mutate(basal_area = pi * DBH_cm^2) %>% 
+  group_by(survey_number) %>% 
+  mutate(stand_basal_area = mean(basal_area) / survey_area * 10000)
+
+```
+
+4) Calculate average stand height
+
+First, we need to create a new column where we calculate tree height. Remember, this is done by multiplying the degrees (make sure to divide by 100) by the distance, but don't forget to subtract the height of your eyes!
+```{r}
+stand_height <- stand_data %>% 
+  mutate(tree_height = ((angle_degrees/100) * distance_m) - eye_height_m) %>% 
+  group_by(survey_number) %>% 
+  summarise(mean_stand_height = mean(tree_height))
+
+```
 
 
