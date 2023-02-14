@@ -1,0 +1,54 @@
+---
+title: "Lab_10_Carbon_stocks"
+output: html_document
+date: "2023-02-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# helpful packages
+library(tidyverse)
+library(ggplot2)
+
+```
+
+## Carbon Stocks
+
+In this Markdown, you will be working with your tree stand data to...
+
+
+1) Make sure your group's tree stand survey data is completely entered
+
+2) Read in your data here:
+```{r}
+
+# stand_data <- read.csv("title.csv")
+
+stand_data <- read.csv("stand_data_test.csv")
+
+```
+
+3) Calculate tree stand density for each plot
+
+First, you need to calculate the area that you surveyed, which was a circle with a 5 meter diameter:
+```{r}
+
+survey_area <- pi * 5^2
+
+```
+
+Then, you can get a count of the total number of trees in each plot using...
+```{r}
+
+tree_density <- stand_data %>% 
+  group_by(survey_number) %>%  # first, group by each survey
+  count() %>% # then get total number of trees in each survey
+  mutate(density = n / survey_area)# this adds a new column called "density" that divides the count column by our survey area
+
+```
+
+Qustions 1) Look at this new dataset called "tree_density", do all the plots seem similar in density or do any stand out?
+(write answer here)
+
+
