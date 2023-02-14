@@ -49,12 +49,12 @@ tree_density <- stand_data %>%
 
 ```
 
-Question 1) Look at this new dataset called "tree_density", do all the plots seem similar in density or do any stand out?
+Question 1) Look at this new data set called "tree_density", do all the plots seem similar in density or do any stand out?
 (write answer here)
 
 3) Calculate the stand basal area (cm2 stem area per hectare)
 
-There are lots of ways to do this! One way is to first create a new column calculating each trees basal area, that is, use the diameter to calculate the area. Then group again by survey_number. Next, create another column called stand_basal_area where you divide the mean basal_area column by the survey area and mulitply by 10,000 to get the basal area per hectare
+There are lots of ways to do this! One way is to first create a new column calculating each trees basal area, that is, use the diameter to calculate the area. Then group again by survey_number. Next, create another column called stand_basal_area where you divide the mean basal_area column by the survey area and multiply by 10,000 to get the basal area per hectare
 
 ```{r}
 tree_basal_area <- stand_data %>% 
@@ -75,4 +75,29 @@ stand_height <- stand_data %>%
 
 ```
 
+5) Use an allometric equation to plot standing biomass
 
+In order to determine the above ground biomass of our eucs, we could simply treat them as a column using our calculations for height and diameter; however, this tends to be inaccurate.  Instead, researches have determined more accurate and sometimes species-specific allometric equations.  For today, we will be using the AGB = 0.009(dbh)^3.638, which other researchers determined for a similar species of eucalyptus.
+
+So we can simply make a new column for above-ground biomass (in kg) using the mutate() function, and then add this up for each survey
+```{r}
+tree_biomass <- stand_data %>%
+  mutate(agb = 0.009 * DBH_cm^3.638) %>% 
+  group_by(survey_number) %>% 
+  summarise(total_biomass = sum(agb))
+
+```
+
+6) Calculate above-ground carbon
+
+Using our estmates for above-ground biomass, we can now determine the amount of carbon stored within each survey site
+
+To do this, we will multiply the biomass by 35%, which is approximately the amount of carbon present that researchers found have found when processing eucalyptus tree core samples.
+
+```{r}
+tree_carbon <- tree_biomass %>% 
+  mutate(plot_carbon = total_biomass * .35)
+
+```
+
+7) Oak tree above-ground carbon storage
