@@ -90,7 +90,7 @@ tree_biomass <- stand_data %>%
 
 6) Calculate above-ground carbon
 
-Using our estmates for above-ground biomass, we can now determine the amount of carbon stored within each survey site
+Using our estimates for above-ground biomass, we can now determine the amount of carbon stored within each survey site
 
 To do this, we will multiply the biomass by 35%, which is approximately the amount of carbon present that researchers found have found when processing eucalyptus tree core samples.
 
@@ -101,3 +101,21 @@ tree_carbon <- tree_biomass %>%
 ```
 
 7) Oak tree above-ground carbon storage
+We will now do the same work as above for a similar stand of trees, but imagine that they are oaks instead of eucalyptus. How do you think this might affect carbon storage?
+
+To do this, use your DBH calculations but with the allometric equation ABG = 0.062 * dbh^2.584 and the percent carbon as 45%
+
+```{r}
+
+tree_biomass_oaks <- stand_data %>%
+  mutate(agb_eucs = 0.009 * DBH_cm^3.638) %>% 
+  mutate(agb_oaks = 0.062 * DBH_cm^2.584) %>% 
+  group_by(survey_number) %>% 
+  summarise(total_biomass_eucs = sum(agb_eucs), total_biomass_oaks = sum(agb_oaks)) %>% 
+  mutate(plot_carbon_eucs = total_biomass_eucs * .35) %>% 
+  mutate(plot_carbon_oaks = total_biomass_oaks* .45)
+  
+```
+
+
+
